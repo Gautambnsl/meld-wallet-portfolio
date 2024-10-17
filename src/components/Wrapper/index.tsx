@@ -231,7 +231,7 @@ const Wrapper = () => {
               className="wallet-input"
               placeholder="Enter your wallet address"
             />
-            <button className="connect-button">Connect</button>
+            <button className="connect-button">Submit Address</button>
           </div>
           <div className="tabs-with-statistic-coin">
             <div className="header-tabs">
