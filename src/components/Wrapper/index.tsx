@@ -7,105 +7,101 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Card from '../Card';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler,
-} from 'chart.js';
-import zoomPlugin from 'chartjs-plugin-zoom';
-import { Line } from 'react-chartjs-2';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler,
-  zoomPlugin
-);
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
 
 const Wrapper = () => {
-  const data = {
-    labels: [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ],
-    datasets: [
-      {
-        label: 'Stock Price',
-        data: [65, 59, 80, 81, 56, 55, 40, 70, 85, 90, 75, 100], // Sample stock prices
-        fill: false,
-        backgroundColor: '#E51B44',
-        borderColor: '#E51B44',
-        tension: 0.1, // Smooth curves
-      },
-    ],
-  };
-
-  // Chart options with zoom and pan functionality
   const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
+    chart: {
+      type: 'area',
+      backgroundColor: '#252630',
+    },
+    title: {
+      text: null,
+    },
+    xAxis: {
+      categories: [
+        'Oct 8',
+        'Oct 9',
+        'Oct 10',
+        'Oct 11',
+        'Oct 12',
+        'Oct 13',
+        'Oct 14',
+      ],
+      tickmarkPlacement: 'on',
       title: {
-        display: true,
-        text: 'Stock Market Prices',
+        text: null,
       },
-      zoom: {
-        pan: {
-          enabled: true,
-          mode: 'xy', // Enable panning in both x and y directions
+      labels: {
+        style: {
+          color: '#fff',
         },
-        zoom: {
-          enabled: true,
-          mode: 'xy', // Enable zooming in both x and y directions
-          rangeMin: {
-            x: null, // Set minimum zoom range for x-axis (null means no restriction)
-            y: null, // Set minimum zoom range for y-axis (null means no restriction)
-          },
-          rangeMax: {
-            x: null, // Set maximum zoom range for x-axis (null means no restriction)
-            y: null, // Set maximum zoom range for y-axis (null means no restriction)
-          },
+      },
+      gridLineColor: 'transparent',
+    },
+    yAxis: {
+      title: {
+        text: null,
+      },
+      labels: {
+        style: {
+          color: '#fff',
         },
+        formatter: function () {
+          return '$' + this?.value;
+        },
+      },
+      gridLineColor: 'transparent',
+      min: 0,
+    },
+    tooltip: {
+      shared: true,
+      crosshairs: true,
+      backgroundColor: '#252630',
+      borderColor: '#E51B44',
+      style: {
+        color: '#fff',
+      },
+      formatter: function () {
+        return `Balance: $${this?.y}<br>${this?.x}`;
       },
     },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: 'Months',
+    plotOptions: {
+      area: {
+        fillColor: {
+          linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+          stops: [
+            [0, '#E51B44'],
+            [1, 'rgba(229, 27, 68, 0.1)'],
+          ],
         },
-        beginAtZero: true,
-      },
-      y: {
-        title: {
-          display: true,
-          text: 'Price ($)',
+        marker: {
+          enabled: true,
+          fillColor: '#E51B44',
+          radius: 4,
         },
-        beginAtZero: true,
+        lineWidth: 2,
+        states: {
+          hover: {
+            lineWidth: 2,
+          },
+        },
+        threshold: null,
       },
+    },
+    series: [
+      {
+        name: 'Balance',
+        data: [0, 0, 0, 0, 0, 1660, 1660],
+        color: '#E51B44',
+      },
+    ],
+    credits: {
+      enabled: false,
+    },
+    legend: {
+      enabled: false,
     },
   };
 
@@ -229,6 +225,100 @@ const Wrapper = () => {
               </Card>
             </div>
           </div>
+          <div className="wallet-container">
+            <input
+              type="text"
+              className="wallet-input"
+              placeholder="Enter your wallet address"
+            />
+            <button className="connect-button">Connect</button>
+          </div>
+          <div className="tabs-with-statistic-coin">
+            <div className="header-tabs">
+              <div className="control-tabs">
+                <p className="active">ASSETS</p>
+                <p>NFT</p>
+              </div>
+            </div>
+            <div className="wrapper-table" id="table-1">
+              <table className="style-table" id="search_table-1">
+                <tbody>
+                  <tr>
+                    <td>
+                      <div className="name-coin">
+                        <div>
+                          <img src="./images/icon-coins/solana.svg" alt="" />
+                        </div>
+                        <div>
+                          <p>Solana</p>
+                          <p>SOL</p>
+                        </div>
+                      </div>
+                      <div>
+                        1.3 SOL
+                        <br />
+                        $1659.45
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="name-coin">
+                        <div>
+                          <img src="./images/icon-coins/solana.svg" alt="" />
+                        </div>
+                        <div>
+                          <p>Solana</p>
+                          <p>SOL</p>
+                        </div>
+                      </div>
+                      <div>
+                        1.3 SOL
+                        <br />
+                        $1659.45
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="name-coin">
+                        <div>
+                          <img src="./images/icon-coins/solana.svg" alt="" />
+                        </div>
+                        <div>
+                          <p>Solana</p>
+                          <p>SOL</p>
+                        </div>
+                      </div>
+                      <div>
+                        1.3 SOL
+                        <br />
+                        $1659.45
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="name-coin">
+                        <div>
+                          <img src="./images/icon-coins/xrp.svg" alt="" />
+                        </div>
+                        <div>
+                          <p>XRP</p>
+                          <p>XRP</p>
+                        </div>
+                      </div>
+                      <div>
+                        1.3 XRP
+                        <br />
+                        $1659.45
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
           <div className="graph-block">
             <div className="title">My Portfolio</div>
             <div className="portfolio-control">
@@ -276,58 +366,8 @@ const Wrapper = () => {
             </div>
             <div className="live-table">
               <div className="rere">
-                <Line data={data} options={options} />
+                <HighchartsReact highcharts={Highcharts} options={options} />
               </div>
-            </div>
-          </div>
-          <div className="tabs-with-statistic-coin">
-            <div className="header-tabs">
-              <div className="control-tabs">
-                <p className="active">ASSETS</p>
-                <p>NFT</p>
-              </div>
-            </div>
-            <div className="wrapper-table" id="table-1">
-              <table className="style-table" id="search_table-1">
-                <tbody>
-                  <tr>
-                    <td>
-                      <div className="name-coin">
-                        <div>
-                          <img src="./images/icon-coins/solana.svg" alt="" />
-                        </div>
-                        <div>
-                          <p>Solana</p>
-                          <p>SOL</p>
-                        </div>
-                      </div>
-                      <div>
-                        1.3 SOL
-                        <br />
-                        $1659.45
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="name-coin">
-                        <div>
-                          <img src="./images/icon-coins/xrp.svg" alt="" />
-                        </div>
-                        <div>
-                          <p>XRP</p>
-                          <p>XRP</p>
-                        </div>
-                      </div>
-                      <div>
-                        1.3 XRP
-                        <br />
-                        $1659.45
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
           </div>
         </main>
