@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Domine:wght@400..700&display=swap');
+@import url(./wrapper.scss);
+
+* {
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    text-decoration: none;
+    background-repeat: no-repeat;
+}
+
+body {
+    background-color: #19191d;
+    color: rgb(237, 238, 240);
+    font-family: "Domine", serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    letter-spacing: 0.00938em;
+}
