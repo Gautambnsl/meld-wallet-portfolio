@@ -6,11 +6,13 @@ import {
   Wallet,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import Card from '../Card';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import { useState } from 'react';
 
-const Wrapper = () => {
+const WalletPortfolio = () => {
+  const [selectedTab, setSelectedTab] = useState<string>('assets');
+
   const options = {
     chart: {
       type: 'area',
@@ -48,7 +50,9 @@ const Wrapper = () => {
         style: {
           color: '#fff',
         },
-        formatter: function () {
+        formatter: function (
+          this: Highcharts.AxisLabelsFormatterContextObject
+        ): string {
           return '$' + this?.value;
         },
       },
@@ -63,7 +67,9 @@ const Wrapper = () => {
       style: {
         color: '#fff',
       },
-      formatter: function () {
+      formatter: function (
+        this: Highcharts.AxisLabelsFormatterContextObject
+      ): string {
         return `Balance: $${this?.y}<br>${this?.x}`;
       },
     },
@@ -116,20 +122,15 @@ const Wrapper = () => {
           <div className="logo"></div>
         </Link>
         <div className="info-user">
-          <div className="bottom">
-            <div className="title">
-              <div className="name-user">
-                <div className="name">
-                  <p>All Assets</p>
-                  <span>22 Assets</span>
-                </div>
-                <div className="status">
-                  <p>$16,375.25</p>
-                </div>
-              </div>
-            </div>
+          <div className="header">
+            <p className="title">All Assets</p>
+            <span className="total-assets">22 Assets</span>
+          </div>
+          <div className="asset-details">
+            <p className="asset-value">$16,375.25</p>
           </div>
         </div>
+
         <div className="main-menu">
           <div className="menu">
             <div className="menu-item active">
@@ -145,19 +146,23 @@ const Wrapper = () => {
                 <div className="icon">
                   <Landmark />
                 </div>
-                <p>Landing & Borrowing</p>
+                <p>Lending & Borrowing</p>
               </Link>
             </div>
             <div className="menu-item">
-              <Link to="/loans">
+              <a
+                href="https://devbhuptani.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <div className="icon">
                   <Wallet />
                 </div>
                 <p>Staking</p>
-              </Link>
+              </a>
             </div>
             <div className="menu-item">
-              <Link to="/swap">
+              <Link to="/alert-services">
                 <div className="icon">
                   <ArrowRightLeft />
                 </div>
@@ -191,38 +196,26 @@ const Wrapper = () => {
         <main className="content-loans">
           <div className="text-info-loans transparent-loans">
             <div className="block-card">
-              <Card title="SUPPLY POWER">
-                <div className="field">
-                  <div className="left">
-                    <p>1.76% APY</p>
-                    <span>UP TO &lt; $0.01/M</span>
-                  </div>
-                </div>
-              </Card>
-              <Card title="BORROW POWER">
-                <div className="field">
-                  <div className="left">
-                    <p>$2,385.76</p>
-                    <span>@ 0.24%</span>
-                  </div>
-                </div>
-              </Card>
-              <Card title="STAKED">
-                <div className="field">
-                  <div className="left">
-                    <p>$2,385.76</p>
-                    <span>@ 0.24%</span>
-                  </div>
-                </div>
-              </Card>
-              <Card title="AVERAGE YIELD">
-                <div className="field">
-                  <div className="left">
-                    <p>$2,385.76</p>
-                    <span>@ 0.24%</span>
-                  </div>
-                </div>
-              </Card>
+              <div className="card">
+                <p className="title">Supply Power</p>
+                <h3 className="value">1.76% APY</h3>
+                <span className="percentage">UP TO &lt; $0.01/M</span>
+              </div>
+              <div className="card">
+                <p className="title">Borrow Power</p>
+                <h3 className="value">$2,385.76</h3>
+                <span className="percentage">@ 0.24%</span>
+              </div>
+              <div className="card">
+                <p className="title">Staked</p>
+                <h3 className="value">$2,385.76</h3>
+                <span className="percentage">@ 0.24%</span>
+              </div>
+              <div className="card">
+                <p className="title">Average Yield</p>
+                <h3 className="value">$2,385.76</h3>
+                <span className="percentage">@ 0.24%</span>
+              </div>
             </div>
           </div>
           <div className="wallet-container">
@@ -236,87 +229,90 @@ const Wrapper = () => {
           <div className="tabs-with-statistic-coin">
             <div className="header-tabs">
               <div className="control-tabs">
-                <p className="active">ASSETS</p>
-                <p>NFT</p>
+                <p
+                  className={selectedTab === 'assets' ? 'active' : ''}
+                  onClick={() => setSelectedTab('assets')}
+                >
+                  ASSETS
+                </p>
+                <p
+                  className={selectedTab === 'nft' ? 'active' : ''}
+                  onClick={() => setSelectedTab('nft')}
+                >
+                  NFT
+                </p>
               </div>
             </div>
             <div className="wrapper-table" id="table-1">
-              <table className="style-table" id="search_table-1">
-                <tbody>
-                  <tr>
-                    <td>
-                      <div className="name-coin">
-                        <div>
-                          <img src="./images/icon-coins/solana.svg" alt="" />
-                        </div>
-                        <div>
+              {selectedTab === 'assets' && (
+                <table className="style-table" id="search_table-1">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div className="name-coin">
+                          <div className="coin-box" />
                           <p>Solana</p>
-                          <p>SOL</p>
                         </div>
-                      </div>
-                      <div>
-                        1.3 SOL
-                        <br />
-                        $1659.45
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="name-coin">
-                        <div>
-                          <img src="./images/icon-coins/solana.svg" alt="" />
+                        <div className="coin-price">
+                          1.3 SOL
+                          <p>$1659.45</p>
                         </div>
-                        <div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div className="name-coin">
+                          <div className="coin-box" />
                           <p>Solana</p>
-                          <p>SOL</p>
                         </div>
-                      </div>
-                      <div>
-                        1.3 SOL
-                        <br />
-                        $1659.45
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="name-coin">
-                        <div>
-                          <img src="./images/icon-coins/solana.svg" alt="" />
+                        <div className="coin-price">
+                          1.3 SOL
+                          <p>$1659.45</p>
                         </div>
-                        <div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div className="name-coin">
+                          <div className="coin-box" />
                           <p>Solana</p>
-                          <p>SOL</p>
                         </div>
-                      </div>
-                      <div>
-                        1.3 SOL
-                        <br />
-                        $1659.45
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="name-coin">
-                        <div>
-                          <img src="./images/icon-coins/xrp.svg" alt="" />
+                        <div className="coin-price">
+                          1.3 SOL
+                          <p>$1659.45</p>
                         </div>
-                        <div>
-                          <p>XRP</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div className="name-coin">
+                          <div className="coin-box" />
                           <p>XRP</p>
                         </div>
-                      </div>
-                      <div>
-                        1.3 XRP
-                        <br />
-                        $1659.45
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                        <div className="coin-price">
+                          1.3 SOL
+                          <p>$1659.45</p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              )}
+              {selectedTab === 'nft' && (
+                <div className="nft-div">
+                  <div className="nft-card">
+                    <img
+                      src="https://images.unsplash.com/photo-1721332153282-3be1f363074d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzMDk1MTB8MXwxfGFsbHwxfHx8fHx8fHwxNzI5MjY4NDQ1fA&ixlib=rb-4.0.3&q=80&w=1080"
+                      alt="Meld Bank Man"
+                      className="nft-image"
+                    />
+                    <div className="nft-info">
+                      <p className="nft-name">Meld Bank Man</p>
+                      <p className="nft-wallet">#4d656c642042616e6</p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           <div className="graph-block">
@@ -376,4 +372,4 @@ const Wrapper = () => {
   );
 };
 
-export default Wrapper;
+export default WalletPortfolio;

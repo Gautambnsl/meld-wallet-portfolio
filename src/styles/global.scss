@@ -1,5 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Domine:wght@400..700&display=swap');
-@import url(./wrapper.scss);
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital@0;1&display=swap');
+@import url(./wallet-portfolio.scss);
+@import url(./alert-services.scss);
 
 * {
     margin: 0;
@@ -9,15 +10,18 @@
     outline: none;
     text-decoration: none;
     background-repeat: no-repeat;
+    border-width: 0;
+    border-style: solid;
+    border-color: #edeef0;
 }
 
 body {
     background-color: #19191d;
-    color: rgb(237, 238, 240);
-    font-family: "Domine", serif;
+    color: #edeef0;
+    font-family: "Rubik", sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 0.875rem;
     line-height: 1.4;
-    letter-spacing: 0.00938em;
+    letter-spacing: 0.05em;
 }
