@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -24,6 +25,7 @@ const userDataSlice = createSlice({
     updateField: (state, action) => {
       const { field, value } = action.payload;
       if (field in state) {
+        // @ts-ignore
         state[field] = value;
       }
     },

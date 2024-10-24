@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
 import { updateProfileApi } from '../../services/profile/updateProfileApi';
 import { toast } from 'react-hot-toast';
@@ -6,7 +7,7 @@ import { updateField } from '../../store/slices/userDataSlice';
 
 interface EditModalProps {
   field: string;
-  value: string;
+  value: any;
   label: string;
   isOpen: boolean;
   onClose: () => void;

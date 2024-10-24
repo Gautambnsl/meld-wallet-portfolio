@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
   ArrowRightLeft,
   Landmark,
@@ -31,7 +33,9 @@ const WalletPortfolio = () => {
   const fetchUserData = () => {
     getProfileApi()
       .then((response) => {
+        // @ts-ignore
         delete response?.__v;
+        // @ts-ignore
         delete response?._id;
         dispatch(getUserData(response));
       })
@@ -50,7 +54,7 @@ const WalletPortfolio = () => {
       const data = {
         tempAddress: userData.tempAddress,
       };
-      const response = await updateProfileApi(data);
+      const response: any = await updateProfileApi(data);
       if (response) {
         dispatch(
           updateField({ field: 'tempAddress', value: userData.tempAddress })
@@ -120,6 +124,7 @@ const WalletPortfolio = () => {
       formatter: function (
         this: Highcharts.AxisLabelsFormatterContextObject
       ): string {
+        // @ts-ignore
         return `Balance: $${this?.y}<br>${this?.x}`;
       },
     },

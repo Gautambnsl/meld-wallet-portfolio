@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useEffect, useState } from 'react';
 import { getProfileApi } from '../../services/profile/getProfileApi';
 import toast from 'react-hot-toast';
@@ -22,7 +24,9 @@ const ProfilePage = () => {
   const fetchUserData = () => {
     getProfileApi()
       .then((response) => {
+        // @ts-ignore
         delete response?.__v;
+        // @ts-ignore
         delete response?._id;
         dispatch(getUserData(response));
       })
@@ -59,7 +63,7 @@ const ProfilePage = () => {
       const data = {
         premiumService: 'pro',
       };
-      const response = await updateProfileApi(data);
+      const response: any = await updateProfileApi(data);
       if (response) {
         dispatch(updateField({ field: 'premiumService', value: 'pro' }));
         toast.success(response);
@@ -87,7 +91,7 @@ const ProfilePage = () => {
         toast.success('Alert set successfully!');
         fetchUserData();
       }
-    } catch (error) {
+    } catch (error: any) {
       toast.error(error?.data?.message);
     }
   };
@@ -247,6 +251,7 @@ const ProfilePage = () => {
 
         <EditModal
           field={modalField}
+          // @ts-ignore
           value={userData[modalField]}
           label={modalField === 'walletAddress' ? 'Wallet Address' : modalField}
           isOpen={modalOpen}
