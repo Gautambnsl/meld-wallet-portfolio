@@ -23,6 +23,7 @@ $back-btn-url: '../images/back-btn/back-btn.svg';
             width: 300px;
             color: #fff;
             transition: transform 0.2s ease;
+            margin-top: 10px;
 
             &:hover {
                 transform: translateY(-5px);
@@ -1603,31 +1604,6 @@ $shadow: rgba(202, 206, 220, 0.62);
 
     .main-content {
         margin-left: 0;
-
-        .header {
-            .theme {
-                .burger {
-                    display: flex;
-                    z-index: 99;
-
-                    &.close {
-                        div:nth-child(1) {
-                            display: none !important;
-                        }
-
-                        div:nth-child(2) {
-                            transform: rotate(45deg);
-                            margin-top: 1px;
-                        }
-
-                        div:nth-child(3) {
-                            transform: rotate(-45deg);
-                            margin-top: -3px;
-                        }
-                    }
-                }
-            }
-        }
     }
 }
 

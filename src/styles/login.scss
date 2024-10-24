@@ -1,0 +1,117 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #1b1b1b;
+}
+
+.login-box {
+    background-color: #252630;
+    border-radius: 1rem;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    padding: 2rem;
+    max-width: 30rem;
+    width: 100%;
+    text-align: center;
+    animation: fadeIn 0.5s;
+}
+
+.login-icon {
+    color: #E51B44;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.login-title {
+    color: #E51B44;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+    align-items: flex-start;
+}
+
+.input-label {
+    color: #e0e0e0;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.input-field {
+    background-color: #252630;
+    color: #e0e0e0;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    width: 100%;
+    transition: all 0.3s;
+    border: 0.0625rem solid #E51B44;
+}
+
+.input-field.error {
+    border: 0.0625rem solid #f05c5e;
+}
+
+.input-field:focus {
+    background-color: #1b1b1b;
+    border-color: #f05c5e;
+    outline: none;
+}
+
+.login-button {
+    background-color: #E51B44;
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.login-button:hover {
+    background-color: #c0162d;
+    transform: scale(1.05);
+}
+
+.password-input-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.toggle-password {
+    cursor: pointer;
+    margin-left: 0.5rem;
+    color: #E51B44;
+    font-size: 1.2rem;
+}
+
+.register-text {
+    color: #e0e0e0;
+    margin-top: 1rem;
+}
+
+.register-link {
+    color: #E51B44;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

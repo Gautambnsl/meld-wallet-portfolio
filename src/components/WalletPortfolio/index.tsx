@@ -3,15 +3,65 @@ import {
   Landmark,
   LayoutDashboard,
   LogOut,
+  User,
   Wallet,
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { removedCookie } from '../../utils/functions/commonFunctions';
+import { cookieKeys } from '../../utils/constants/constants';
+import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { getProfileApi } from '../../services/profile/getProfileApi';
+import { updateField, getUserData } from '../../store/slices/userDataSlice';
+import { updateProfileApi } from '../../services/profile/updateProfileApi';
 
 const WalletPortfolio = () => {
   const [selectedTab, setSelectedTab] = useState<string>('assets');
+
+  const { isAuth } = useSelector((state: RootState) => state.auth);
+  const userData = useSelector((state: RootState) => state.userData);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const fetchUserData = () => {
+    getProfileApi()
+      .then((response) => {
+        delete response?.__v;
+        delete response?._id;
+        dispatch(getUserData(response));
+      })
+      .catch((error) => {
+        console.log('Error fetching user data', error);
+        toast.error(error?.data?.message);
+      });
+  };
+
+  const handleFieldChange = (field: string, value: string) => {
+    dispatch(updateField({ field, value }));
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const data = {
+        tempAddress: userData.tempAddress,
+      };
+      const response = await updateProfileApi(data);
+      if (response) {
+        dispatch(
+          updateField({ field: 'tempAddress', value: userData.tempAddress })
+        );
+        toast.success(response);
+      }
+    } catch (error) {
+      console.error('Error updating address:', error);
+      toast.error('Failed to update address');
+    }
+  };
 
   const options = {
     chart: {
@@ -115,6 +165,18 @@ const WalletPortfolio = () => {
     console.log('value', value);
   };
 
+  const handleClick = () => {
+    if (userData?.premiumService === 'pro') {
+      navigate('/alert-services');
+    } else {
+      toast.error('Please purchase premium from the profile page.');
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
   return (
     <div className="wrapper-main">
       <div className="left-item">
@@ -161,36 +223,47 @@ const WalletPortfolio = () => {
                 <p>Staking</p>
               </a>
             </div>
-            <div className="menu-item">
-              <Link to="/alert-services">
+            <div className="menu-item" onClick={handleClick}>
+              <a>
                 <div className="icon">
                   <ArrowRightLeft />
                 </div>
                 <p>Alert Services</p>
+              </a>
+            </div>
+            <div className="menu-item">
+              <Link to="/profile">
+                <div className="icon">
+                  <User />
+                </div>
+                <p>User Profile</p>
               </Link>
             </div>
           </div>
         </div>
-        <div className="logout">
-          <div className="icon">
-            <LogOut />
+        {isAuth && (
+          <div
+            className="logout"
+            onClick={() => {
+              toast.success('Logout successfully');
+              localStorage.clear();
+              removedCookie(cookieKeys.cookieUser);
+              navigate('/login');
+            }}
+          >
+            <div className="icon">
+              <LogOut />
+            </div>
+            <p>
+              <Link to="/login">Logout</Link>
+            </p>
           </div>
-          <p>
-            <Link to="/login">Logout</Link>
-          </p>
-        </div>
+        )}
       </div>
       <div className="main-content">
         <header className="header">
           <div className="name-pages">
             <p>Wallet Portfolio</p>
-          </div>
-          <div className="theme">
-            <div className="burger" aria-label="Menu">
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
           </div>
         </header>
         <main className="content-loans">
@@ -222,9 +295,13 @@ const WalletPortfolio = () => {
             <input
               type="text"
               className="wallet-input"
-              placeholder="Enter your wallet address"
+              placeholder="Enter your temp address"
+              value={userData?.tempAddress}
+              onChange={(e) => handleFieldChange('tempAddress', e.target.value)}
             />
-            <button className="connect-button">Submit Address</button>
+            <button className="connect-button" onClick={handleSubmit}>
+              Submit Address
+            </button>
           </div>
           <div className="tabs-with-statistic-coin">
             <div className="header-tabs">
